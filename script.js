@@ -96,7 +96,10 @@ function displayBooksCard() {
             e => {
                 const id = book["id"];
                 removeBookFromLibrary(id);
-                bookCard.remove();
+                if (library.length <= 0)
+                    displayBooksCard();
+                else
+                    bookCard.remove();
             }
         );
 
