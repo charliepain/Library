@@ -23,6 +23,15 @@ function addBookToLibrary(title, author, numberPages, read) {
     library.push(book);
 }
 
+function removeBookFromLibrary(id) {
+    for (let i = 0; i < library.length; i++) {
+        if (library[i]["id"] === id) {
+            library.splice(i,1);
+            return;
+        }
+    }
+}
+
 function displayBooksCard() {
     const body = document.querySelector("body");
 
@@ -46,25 +55,38 @@ function displayBooksCard() {
     for (let book of library) {
         const bookCard = document.createElement("div");
         bookCard.classList.add("book-card");
+        bookCard.setAttribute("data-id",book["id"]);
         bookSection.appendChild(bookCard);
         
-        const id = document.createElement("div");
+        // const id = document.createElement("div");
         const title = document.createElement("div");
         const author = document.createElement("div");
         const numberPages = document.createElement("div");
         const read = document.createElement("div");
         
-        id.textContent = `Id: ${book["id"]}`;
+        // id.textContent = `Id: ${book["id"]}`;
         title.textContent = `Title: ${book["title"]}`;
         author.textContent = `Author: ${book["author"]}`;
         numberPages.textContent = `Number of pages: ${book["numberPages"]}`;
         read.textContent = `Read: ${book["read"] ? "Yes" : "No"}`;
 
-        bookCard.appendChild(id);
+        const removeBookButton = document.createElement("button");
+        removeBookButton.setAttribute("type","button");
+        removeBookButton.textContent = "Remove this book";
+        removeBookButton.addEventListener("click",
+            e => {
+                const id = book["id"];
+                removeBookFromLibrary(id);
+                displayBooksCard();
+            }
+        );
+
+        // bookCard.appendChild(id);
         bookCard.appendChild(title);
         bookCard.appendChild(author);
         bookCard.appendChild(numberPages);
         bookCard.appendChild(read);
+        bookCard.appendChild(removeBookButton);
     }
 }
 
@@ -154,10 +176,10 @@ document.querySelector(".new-book").addEventListener("click",
 
     });
 
-// addBookToLibrary("A","Ason",200,true);
-// addBookToLibrary("B","Bson",300,false);
-// addBookToLibrary("C","Cson",400,true);
-// addBookToLibrary("D","Dson",500,false);
+addBookToLibrary("A","Ason",200,true);
+addBookToLibrary("B","Bson",300,false);
+addBookToLibrary("C","Cson",400,true);
+addBookToLibrary("D","Dson",500,false);
 
 displayBooksCard();
 
