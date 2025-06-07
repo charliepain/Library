@@ -16,6 +16,10 @@ function Book(title, author, numberPages, read) {
         readingStatus = read ? "already read" : "not read yet";
         console.log(`${this.title} by ${this.author}, ${numberPages} pages, ${readingStatus}`);
     }
+
+    this.changeReadStatus = function() {
+        this.read = !this.read;
+    }
 }
 
 function addBookToLibrary(title, author, numberPages, read) {
@@ -64,6 +68,21 @@ function displayBooksCard() {
         const numberPages = document.createElement("div");
         const read = document.createElement("div");
         
+        const readContainer = document.createElement("div");
+        const changeReadStatusButton = document.createElement("button");
+        changeReadStatusButton.setAttribute("type","button");
+        changeReadStatusButton.textContent = "Change read status";
+        changeReadStatusButton.addEventListener("click",
+            () => {
+                book.changeReadStatus();
+                displayBooksCard();
+            }
+        );
+
+        readContainer.appendChild(read);
+        readContainer.appendChild(changeReadStatusButton);
+        readContainer.classList.add("read-container");
+        
         // id.textContent = `Id: ${book["id"]}`;
         title.textContent = `Title: ${book["title"]}`;
         author.textContent = `Author: ${book["author"]}`;
@@ -77,7 +96,7 @@ function displayBooksCard() {
             e => {
                 const id = book["id"];
                 removeBookFromLibrary(id);
-                displayBooksCard();
+                bookCard.remove();
             }
         );
 
@@ -85,7 +104,7 @@ function displayBooksCard() {
         bookCard.appendChild(title);
         bookCard.appendChild(author);
         bookCard.appendChild(numberPages);
-        bookCard.appendChild(read);
+        bookCard.appendChild(readContainer);
         bookCard.appendChild(removeBookButton);
     }
 }

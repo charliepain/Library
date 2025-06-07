@@ -95,7 +95,7 @@ body {
   background-color: aqua;
   padding: 1em;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18em, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
   gap: 1em;
 }
 
@@ -110,6 +110,11 @@ body {
 .book-card button {
   width: 10em;
   align-self: center;
+}
+
+.read-container {
+  display: flex;
+  gap: 1em;
 }
 
 .book-form {
